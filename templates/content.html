@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Simple Image Generator</h1>
+<p>please input 512x512 image, other resolution will be resized to this size</p>
+
+
+<div class="d-flex flex-column bg-primary justify-content-center">
+  <div class="d-inline-flex flex-column bg-success  object-fit" style="width: fit-content;">
+    <div class="d-flex flex-row p-3 justify-content-center gap-2">
+      <div class="d-flex flex-column ">
+        <img class="p-3 border border-black" src="{{data.ori}}" alt="control image" , width="256px" , height="256px" />
+        <img class="p-3 border border-black" src="{{data.canny}}" alt="jpg stuff" , width="256px" , height="256px" />
+      </div>
+      <img class="p-3 border border-black" src="{{data.result}}" alt="jpg stuff" , width="512px" , height="512px" />
+    </div>
+    <div class="p-3" style="width: fit-content;">
+      <form method="post" enctype="multipart/form-data">
+        <div class="d-flex flex-column">
+          <div class="d-flex flex-row">
+            <input type="file" name="uploadFile">
+            <button>Upload</button>
+          </div>
+          <input type="text" name="textPrompt">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div style="height: 2000px;">
+  🤨
+</div>
+{% endblock %}
