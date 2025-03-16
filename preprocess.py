@@ -1,6 +1,7 @@
+import os
 import cv2
-from PIL import Image
 import time
+from PIL import Image
  
 class DataPrep():
     def __init__(self):
@@ -20,6 +21,13 @@ class DataPrep():
         self._canny_t_lower = 70 
         self.result_image_counter = 0
         
+        # additional
+        self.initiate_upload_folder()
+
+    def initiate_upload_folder(self):
+        if not os.path.exists(self._upload_folder):
+            os.makedirs(self._upload_folder)
+
 
     def get_all_path(self):
         data = {
@@ -27,6 +35,7 @@ class DataPrep():
             "canny": self.canny_image_path,
             "result": self.result_image_path
         }
+        print(f'PREP: GET ALL PATH: {data}')
         return data
 
     def _verify_image_format(self, filename):
@@ -66,6 +75,7 @@ class DataPrep():
         
         # check file format is {'png', 'jpg', 'jpeg'}, else return null
         file_format = self._verify_image_format(uploaded_file.filename)
+        print(f"file format: {file_format}")
         # file is not within format 
         if not file_format:
             # TO-DO give response to in the web (flash)
@@ -77,12 +87,14 @@ class DataPrep():
         return_data["status"] = True
         return_data['message'] = file_format
         
+        print(f"data to return: {return_data}")
+
         return return_data
 
     def save_image_to_upload(self, image_to_save, extension):
         now = time.time()
-        filename = f"{int(float(now)*10000)}_up"
-        self.up_image_path = f"{self._upload_folder}{filename}.{extension}"
+        filename = f"{int(float(now)*10000)}"
+        self.up_image_path = f"{self._upload_folder}{filename}_up.{extension}"
         image_to_save.save(self.up_image_path)
 
         # save current image filename and extension
@@ -90,19 +102,33 @@ class DataPrep():
         self._curr_img_extension = extension
 
 
-
     def get_upload_path(self):
         return self._upload_folder
+
+    def get_curr_image_name(self):
+        return self._curr_img_name
+    
+    def get_curr_image_extension(self):
+        return self._curr_img_extension
+
+    def get_upload_folder(self):
+        return self._upload_folder
+
+    def preprocess(self):
+        self._resize_image()
+        self._generate_canny()
 
     def _resize_image(self):
         my_img = Image.open(self.up_image_path)
         resized_image = my_img.resize((512,512))
         resized_image.save(f"{self.up_image_path}")
+        
 
     def _generate_canny(self):
         my_img = cv2.imread(self.up_image_path)
         canny_image = cv2.Canny(my_img, self._canny_t_lower, self._canny_t_upper)
         self.canny_image_path = f"{self._upload_folder}{self._curr_img_name}_cn.{self._curr_img_extension}"
+        print(f"write: {self.canny_image_path}")
         cv2.imwrite(self.canny_image_path, canny_image)
         
 
