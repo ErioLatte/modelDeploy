@@ -1,0 +1,112 @@
+{
+  "_class_name": "FlexibleModulatedControlNetModel",
+  "_diffusers_version": "0.30.3",
+  "act_fn": "silu",
+  "addition_embed_type": null,
+  "addition_embed_type_num_heads": 64,
+  "addition_time_embed_dim": null,
+  "class_embed_type": null,
+  "conditioning_channels": 3,
+  "conditioning_embedding_out_channels": [
+    16,
+    32,
+    96,
+    256
+  ],
+  "controlnet_conditioning_channel_order": "rgb",
+  "cross_attention_dim": 1024,
+  "down_block_types": [
+    "CrossAttnDownBlock2D",
+    "CrossAttnDownBlock2D",
+    "CrossAttnDownBlock2D",
+    "DownBlock2D"
+  ],
+  "downsample_padding": 1,
+  "encoder_hid_dim": null,
+  "encoder_hid_dim_type": null,
+  "flip_sin_to_cos": true,
+  "freq_shift": 0,
+  "global_pool_conditions": false,
+  "in_channels": 4,
+  "locon_rank": 8,
+  "mid_block_scale_factor": 1,
+  "mid_block_type": "UNetMidBlock2DCrossAttn",
+  "modulation_scale": 200,
+  "norm_eps": 1e-05,
+  "norm_num_groups": 32,
+  "num_class_embeds": null,
+  "only_cross_attention": false,
+  "projection_class_embeddings_input_dim": null,
+  "resnet_time_scale_shift": "default",
+  "structure": [
+    [
+      "ResnetBlock2D+Transformer2DModel",
+      160,
+      5
+    ],
+    [
+      "DownsampleLoCon2D",
+      160,
+      5
+    ],
+    [
+      "ResnetBlock2D+Transformer2DModel",
+      320,
+      10
+    ],
+    [
+      "DownsampleLoCon2D",
+      320,
+      10
+    ],
+    [
+      "ResnetBlock2D+Transformer2DModel",
+      480,
+      15
+    ],
+    [
+      "DownsampleLoCon2D",
+      640,
+      20
+    ],
+    [
+      "ResnetBlock2D",
+      640,
+      20
+    ],
+    [
+      "ResnetBlock2D",
+      640,
+      20
+    ]
+  ],
+  "target_block_out_channels": [
+    320,
+    320,
+    320,
+    640,
+    640,
+    640,
+    1280,
+    1280,
+    1280,
+    1280,
+    1280
+  ],
+  "transformer_layers_per_block": 1,
+  "upcast_attention": true,
+  "use_linear_projection": true,
+  "zero_conv_mapping": [
+    0,
+    0,
+    1,
+    2,
+    2,
+    3,
+    4,
+    4,
+    5,
+    6,
+    7
+  ]
+}
