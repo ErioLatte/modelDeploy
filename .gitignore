@@ -2,3 +2,4 @@ __pycache__
 static/upload
 templates/test.html
 static/kawaiiuwuplaceholder.jpg
+test.py
